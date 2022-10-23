@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.financeiro.Financeiro.entidades.enums.ContaStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,11 +26,12 @@ public class Conta implements Serializable {
 	private Long id;
 	private String nome;
 	private String descricao;
-	
+
+	private Integer contaStatus;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant dataRegistro;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Contas_Id")
 	private Categoria categoria;
@@ -38,13 +40,15 @@ public class Conta implements Serializable {
 
 	}
 
-	public Conta(Long id, String nome, String descricao, Instant dtRegistro, Categoria categoria) {
+	public Conta(Long id, String nome, String descricao, Instant dtRegistro, Categoria categoria,
+			ContaStatus contaStatus) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.dataRegistro = dtRegistro;
 		this.categoria = categoria;
+		setContaStatus(contaStatus);
 	}
 
 	public Long getId() {
@@ -77,6 +81,17 @@ public class Conta implements Serializable {
 
 	public void setDataRegistro(Instant dataRegistro) {
 		this.dataRegistro = dataRegistro;
+	}
+
+	public ContaStatus getContaStatus() {
+		return ContaStatus.valor(contaStatus);
+	}
+
+	public void setContaStatus(ContaStatus contaStatus) {
+		if(contaStatus!=null) {
+		
+		this.contaStatus = contaStatus.getCode();
+		}
 	}
 
 	@Override
