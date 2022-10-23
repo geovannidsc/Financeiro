@@ -1,12 +1,21 @@
 package com.financeiro.Financeiro.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 
+
+@Entity
 public class Categoria implements Serializable {
 
 	
@@ -18,6 +27,12 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	
+	
+	@OneToMany(mappedBy = "categoria")
+	private List<Conta> contas = new ArrayList<>();
+	
+	
 	
 	public Categoria() {
 		super();
@@ -43,6 +58,12 @@ public class Categoria implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	
+	
+	public List<Conta> getContas() {
+		return contas;
 	}
 
 	@Override
