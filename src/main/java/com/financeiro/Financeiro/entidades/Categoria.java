@@ -26,6 +26,7 @@ public class Categoria implements Serializable {
 	private String nome;
 	
 	
+	
 	@OneToMany(mappedBy = "categoria")
 	private List<Conta> contas = new ArrayList<>();
 	
@@ -39,6 +40,7 @@ public class Categoria implements Serializable {
 		super();
 		this.id = id;
 		this.nome = nome;
+		
 	}
 
 	public Long getId() {

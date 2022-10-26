@@ -11,23 +11,26 @@ import com.financeiro.Financeiro.repositorios.ContaRepositorios;
 
 @Service
 public class ContaServicos {
-	
+
 	@Autowired
 	private ContaRepositorios contaRepositorios;
-	
-	public List<Conta> procurarTodos(){
-		
+
+	public List<Conta> procurarTodos() {
+
 		return contaRepositorios.findAll();
 	}
-	
-	
 
 	public Conta procurarPorId(Long id) {
-		
-		Optional<Conta> obj =  contaRepositorios.findById(id);
-		
+
+		Optional<Conta> obj = contaRepositorios.findById(id);
+
 		return obj.get();
 	}
-	
-	
+
+	public Conta inserirConta(Conta obj) {
+
+		return contaRepositorios.save(obj);
+
+	}
+
 }
