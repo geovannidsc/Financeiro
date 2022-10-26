@@ -7,4 +7,6 @@ import com.financeiro.Financeiro.entidades.Categoria;
 public interface CategoriaRepositorios extends JpaRepository<Categoria, Long> {
 	
 	
+	
+	
 }
