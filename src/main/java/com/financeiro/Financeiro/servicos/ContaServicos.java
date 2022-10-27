@@ -41,5 +41,21 @@ public class ContaServicos {
 	}
 	
 	
+	public Conta atualizar(Long id, Conta obj) {
+		Conta entity = contaRepositorios.getReferenceById(id);
+		atualizarDados(entity, obj);
+		
+		return contaRepositorios.save(entity);
+		
+	}
+
+	private void atualizarDados(Conta entity, Conta obj) {
+		
+		entity.setNome(obj.getNome());
+		//entity.setContaStatus(obj.getContaStatus());
+		//entity.setdescricao(obj.getdescricao());
+		//entity.setDataRegistro(obj.getDataRegistro());
+	}
+	
 
 }
