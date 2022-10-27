@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.financeiro.Financeiro.entidades.Conta;
 import com.financeiro.Financeiro.repositorios.ContaRepositorios;
+import com.financeiro.Financeiro.servicos.exception.ResourceNotFoundException;
 
 @Service
 public class ContaServicos {
@@ -24,7 +25,7 @@ public class ContaServicos {
 
 		Optional<Conta> obj = contaRepositorios.findById(id);
 
-		return obj.get();
+		return obj.orElseThrow( ()-> new ResourceNotFoundException(id));
 	}
 
 	public Conta inserirConta(Conta obj) {
