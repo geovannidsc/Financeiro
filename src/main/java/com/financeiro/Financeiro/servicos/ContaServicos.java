@@ -32,5 +32,14 @@ public class ContaServicos {
 		return contaRepositorios.save(obj);
 
 	}
+	
+	
+	public void delete(Long id) {
+		
+	contaRepositorios.deleteById(id);
+		
+	}
+	
+	
 
 }
