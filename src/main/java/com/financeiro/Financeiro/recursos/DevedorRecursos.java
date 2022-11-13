@@ -13,38 +13,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.financeiro.Financeiro.entidades.Categoria;
-import com.financeiro.Financeiro.servicos.CategoriaServicos;
+import com.financeiro.Financeiro.entidades.Devedor;
+import com.financeiro.Financeiro.servicos.DevedorServicos;
 
 @RestController
-@RequestMapping(value = "/categorias")
-public class CategoriaRecursos {
+@RequestMapping(value = "/devedores")
+public class DevedorRecursos {
 
 	@Autowired
-	private CategoriaServicos categoriaServicos;
+	private DevedorServicos devedorServicos;
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> procurarTodos() {
+	public ResponseEntity<List<Devedor>> procurarTodos() {
 
-		List<Categoria> list = categoriaServicos.procurarTodos();
+		List<Devedor> list = devedorServicos.procurarTodos();
 
 		return ResponseEntity.ok().body(list);
 
 	}
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> procurarPorId(@PathVariable Long id) {
+	public ResponseEntity<Devedor> procurarPorId(@PathVariable Long id) {
 
-		Categoria obj = categoriaServicos.procurarPorId(id);
+		Devedor obj = devedorServicos.procurarPorId(id);
 
 		return ResponseEntity.ok().body(obj);
 
 	}
 
 	@PostMapping
-	public ResponseEntity<Categoria> inserir(@RequestBody Categoria obj) {
+	public ResponseEntity<Devedor> inserir(@RequestBody Devedor obj) {
 
-		obj = categoriaServicos.inserirCategoria(obj);
+		obj = devedorServicos.inserirDevedor(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).body(obj);
 

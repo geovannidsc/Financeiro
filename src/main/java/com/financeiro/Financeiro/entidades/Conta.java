@@ -5,8 +5,10 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.financeiro.Financeiro.entidades.enums.ContaStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,8 +35,12 @@ public class Conta implements Serializable {
 	private Instant dataRegistro;
 
 	@ManyToOne
-	@JoinColumn(name = "Contas_Id")
+	@JoinColumn(name = "Categoria_Id")
 	private Categoria categoria;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "Devedor_Id")
+	private Devedor devedor;
 
 	public Conta() {
 
@@ -49,6 +55,7 @@ public class Conta implements Serializable {
 		this.dataRegistro = dtRegistro;
 		this.categoria = categoria;
 		setContaStatus(contaStatus);
+		
 	}
 
 	public Long getId() {
@@ -92,6 +99,26 @@ public class Conta implements Serializable {
 		
 		this.contaStatus = contaStatus.getCode();
 		}
+	}
+	
+	
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+	
+	
+	
+	public Devedor getDevedor() {
+		return devedor;
+	}
+
+	public void setDevedor(Devedor devedor) {
+		this.devedor = devedor;
 	}
 
 	@Override
