@@ -1,12 +1,13 @@
 package com.financeiro.Financeiro.servicos;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.financeiro.Financeiro.data.vo.v1.ContaVO;
 import com.financeiro.Financeiro.entidades.Conta;
+import com.financeiro.Financeiro.mapper.DozerMapper;
 import com.financeiro.Financeiro.repositorios.ContaRepositorios;
 import com.financeiro.Financeiro.servicos.exception.ResourceNotFoundException;
 
@@ -16,47 +17,48 @@ public class ContaServicos {
 	@Autowired
 	private ContaRepositorios contaRepositorios;
 
-	public List<Conta> procurarTodos() {
+	public List<ContaVO> procurarTodos() {
 
-		return contaRepositorios.findAll();
+		return DozerMapper.parseListObjects(contaRepositorios.findAll(), ContaVO.class);
 	}
 
-	public Conta procurarPorId(Long id) {
+	public ContaVO procurarPorId(Long id) {
 
-		Optional<Conta> obj = contaRepositorios.findById(id);
+		var entity = contaRepositorios.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(id));
 
-		return obj.orElseThrow( ()-> new ResourceNotFoundException(id));
+		return DozerMapper.parseObject(entity, ContaVO.class);
 	}
 
-	public Conta inserirConta(Conta obj) {
+	public ContaVO inserirConta(ContaVO contaVO) {
 
-		return contaRepositorios.save(obj);
+		var entity = DozerMapper.parseObject(contaVO, Conta.class);
+		var vo = DozerMapper.parseObject(contaRepositorios.save(entity), ContaVO.class);
+		
+		return vo;
 
 	}
-	
-	
+
 	public void delete(Long id) {
-		
-	contaRepositorios.deleteById(id);
-		
+
+		contaRepositorios.deleteById(id);
+
 	}
-	
-	
+
 	public Conta atualizar(Long id, Conta obj) {
 		Conta entity = contaRepositorios.getReferenceById(id);
 		atualizarDados(entity, obj);
-		
+
 		return contaRepositorios.save(entity);
-		
+
 	}
 
 	private void atualizarDados(Conta entity, Conta obj) {
-		
+
 		entity.setNome(obj.getNome());
-		//entity.setContaStatus(obj.getContaStatus());
-		//entity.setdescricao(obj.getdescricao());
-		//entity.setDataRegistro(obj.getDataRegistro());
+		// entity.setContaStatus(obj.getContaStatus());
+		// entity.setdescricao(obj.getdescricao());
+		// entity.setDataRegistro(obj.getDataRegistro());
 	}
-	
 
 }

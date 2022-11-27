@@ -1,53 +1,30 @@
-package com.financeiro.Financeiro.entidades;
+package com.financeiro.Financeiro.data.vo.v1;
 
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.financeiro.Financeiro.entidades.Categoria;
+import com.financeiro.Financeiro.entidades.Devedor;
 import com.financeiro.Financeiro.entidades.enums.ContaStatus;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "tb_conta")
-public class Conta implements Serializable {
+public class ContaVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String descricao;
-
 	private int contaStatus;
-	
-	
-
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant dataRegistro;
-
-	@ManyToOne
-	@JoinColumn(name = "Categoria_Id")
 	private Categoria categoria;
-
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "Devedor_Id")
 	private Devedor devedor;
 
-	public Conta() {
+	public ContaVO() {
 
 	}
 
-	public Conta(Long id, String nome, String descricao, Instant dtRegistro, Categoria categoria,
+	public ContaVO(Long id, String nome, String descricao, Instant dtRegistro, Categoria categoria,
 			ContaStatus contaStatus) {
 		super();
 		this.id = id;
@@ -55,8 +32,8 @@ public class Conta implements Serializable {
 		this.descricao = descricao;
 		this.dataRegistro = dtRegistro;
 		this.categoria = categoria;
-	    setContaStatus(contaStatus);
-		
+		setContaStatus(contaStatus);
+
 	}
 
 	public Long getId() {
@@ -96,20 +73,14 @@ public class Conta implements Serializable {
 	}
 
 	public void setContaStatus(ContaStatus contaStatus) {
-		
-		if(contaStatus!=null) {
-		
-		this.contaStatus = contaStatus.getCode();
-		
-		}
-		
 
-		
-		
-		
+		if (contaStatus != null) {
+
+			this.contaStatus = contaStatus.getCode();
+
+		}
+
 	}
-	
-	
 
 	public Categoria getCategoria() {
 		return categoria;
@@ -118,9 +89,7 @@ public class Conta implements Serializable {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
-	
-	
+
 	public Devedor getDevedor() {
 		return devedor;
 	}
@@ -128,10 +97,6 @@ public class Conta implements Serializable {
 	public void setDevedor(Devedor devedor) {
 		this.devedor = devedor;
 	}
-	
-	
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -146,7 +111,7 @@ public class Conta implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Conta other = (Conta) obj;
+		ContaVO other = (ContaVO) obj;
 		return Objects.equals(id, other.id);
 	}
 

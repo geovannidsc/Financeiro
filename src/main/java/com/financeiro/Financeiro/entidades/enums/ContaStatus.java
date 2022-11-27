@@ -10,7 +10,9 @@ public enum ContaStatus {
 	private int code;
 	
 	private ContaStatus(int code) {
+	
 		this.code = code;
+		
 	}
 	
 	public int getCode() {
@@ -18,7 +20,8 @@ public enum ContaStatus {
 		return code;
 	}
 	
-	
+
+
 	public static ContaStatus valor(int code) {
 		
 		for(ContaStatus valor : ContaStatus.values() ) {
