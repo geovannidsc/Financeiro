@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.financeiro.Financeiro.data.vo.v1.ContaVO;
+import com.financeiro.Financeiro.data.vo.v2.ContaVOV2;
 import com.financeiro.Financeiro.entidades.Conta;
 import com.financeiro.Financeiro.mapper.DozerMapper;
+import com.financeiro.Financeiro.mapper.custom.ContaMapper;
 import com.financeiro.Financeiro.repositorios.ContaRepositorios;
 import com.financeiro.Financeiro.servicos.exception.ResourceNotFoundException;
 
@@ -16,6 +18,9 @@ public class ContaServicos {
 
 	@Autowired
 	private ContaRepositorios contaRepositorios;
+	
+	@Autowired
+	private ContaMapper mapper;
 
 	public List<ContaVO> procurarTodos() {
 
@@ -34,6 +39,15 @@ public class ContaServicos {
 
 		var entity = DozerMapper.parseObject(contaVO, Conta.class);
 		var vo = DozerMapper.parseObject(contaRepositorios.save(entity), ContaVO.class);
+		
+		return vo;
+
+	}
+	
+	public ContaVOV2 inserirContav2(ContaVOV2 contaVOV2) {
+
+		var entity = mapper.convertoEntity(contaVOV2);
+		var vo = mapper.convertEntityToVo(contaRepositorios.save(entity));
 		
 		return vo;
 
